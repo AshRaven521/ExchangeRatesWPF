@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ExchangeRates.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace ExchangeRates
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton<MainWindow>();
+                    services.AddSingleton<MainViewModel>();
                 }).Build();
             
         }
@@ -31,7 +33,7 @@ namespace ExchangeRates
         {
             await AppHost.StartAsync();
             var startFrom = AppHost.Services.GetRequiredService<MainWindow>();
-
+            startFrom.DataContext = AppHost.Services.GetRequiredService<MainViewModel>();
             startFrom.Show();
 
             base.OnStartup(e);
