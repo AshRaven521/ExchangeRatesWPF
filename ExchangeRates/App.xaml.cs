@@ -1,4 +1,7 @@
-﻿using ExchangeRates.ViewModel;
+﻿using ExchangeRates.Model.NBRB.BusinessLogic;
+using ExchangeRates.Model.NBRB.DataAccessLayer;
+using ExchangeRates.ViewModel;
+using ExchangeRates.ViewModel.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -23,6 +26,9 @@ namespace ExchangeRates
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddScoped<IDialogService, DialogService>();
+                    services.AddScoped<IFileAccess, JSONAccess>();
+                    services.AddScoped<IWebParser, WebParser>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainViewModel>();
                 }).Build();
